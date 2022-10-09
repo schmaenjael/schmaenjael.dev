@@ -1,9 +1,13 @@
+import { useTranslation } from 'react-i18next';
+
 const Index = () => {
-	return (
-		<div>
-			<h1>Welcome to Remix</h1>
-		</div>
-	);
+  const { t } = useTranslation('common');
+
+  return (
+    <div>
+      <h1>{t('welcome')}</h1>
+    </div>
+  );
 };
 
 export default Index;
