@@ -1,48 +1,70 @@
-import { PassThrough } from "stream";
-import type { EntryContext } from "@remix-run/node";
-import { Response } from "@remix-run/node";
-import { RemixServer } from "@remix-run/react";
-import { renderToPipeableStream } from "react-dom/server";
+import Backend from 'i18next-fs-backend';
+import { I18nextProvider, initReactI18next } from 'react-i18next';
+import { renderToPipeableStream } from 'react-dom/server';
+import { RemixServer } from '@remix-run/react';
+import { createInstance } from 'i18next';
+import { PassThrough } from 'stream';
+import { resolve } from 'path';
 
-const ABORT_DELAY = 5000;
+import type { EntryContext } from '@remix-run/server-runtime';
 
-export default function handleRequest(
+import i18n from './config/locales/i18n';
+import i18next from './config/locales/i18next.server';
+import isbot from 'isbot';
+
+const ABORT_DELAY = 5_000;
+
+const handleRequest = async (
   request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  remixContext: EntryContext
-) {
+  status: number,
+  headers: Headers,
+  context: EntryContext
+) => {
+  const lng = await i18next.getLocale(request);
+  const ns = i18next.getRouteNamespaces(context);
+  const instance = createInstance();
+
+  await instance
+    .use(initReactI18next)
+    .use(Backend)
+    .init({
+      ...i18n,
+      lng,
+      ns,
+      backend: {
+        loadPath: resolve(`./public/locales/{{lng}}/{{ns}}.json`),
+        allowMultiLoading: true,
+      },
+    });
+
   return new Promise((resolve, reject) => {
-    let didError = false;
-
     const { pipe, abort } = renderToPipeableStream(
-      <RemixServer context={remixContext} url={request.url} />,
+      <I18nextProvider i18n={instance}>
+        <RemixServer context={context} url={request.url} />
+      </I18nextProvider>,
       {
-        onShellReady: () => {
-          const body = new PassThrough();
+        [isbot(headers.get('User-Agent')) ? 'onAllReady' : 'onShellReady']:
+          () => {
+            const body: any = new PassThrough({ encoding: 'utf-8' });
 
-          responseHeaders.set("Content-Type", "text/html");
+            headers.set('Content-Type', 'text/html');
 
-          resolve(
-            new Response(body, {
-              headers: responseHeaders,
-              status: didError ? 500 : responseStatusCode,
-            })
-          );
+            resolve(
+              new Response(body, {
+                headers,
+                status,
+              })
+            );
 
-          pipe(body);
-        },
-        onShellError: (err) => {
-          reject(err);
-        },
-        onError: (error) => {
-          didError = true;
-
-          console.error(error);
-        },
+            pipe<any>(body);
+          },
+        onShellError: (error: unknown) => reject(error),
+        onError: (error: unknown) => console.error(error),
       }
     );
 
     setTimeout(abort, ABORT_DELAY);
   });
-}
+};
+
+export default handleRequest;
