@@ -18,6 +18,8 @@ import i18next from './config/locales/i18next.server';
 import { dark, light } from './styles/themes';
 import { Themes } from './models/settings';
 
+import mainStyles from 'build/styles/main.global.css';
+
 export type LoaderData = { locale: string };
 
 export const meta: MetaFunction = () => ({
@@ -28,6 +30,15 @@ export const meta: MetaFunction = () => ({
 
 export const loader: LoaderFunction = async ({ request }) =>
   json<LoaderData>({ locale: await i18next.getLocale(request) });
+
+export const links = () => {
+  return [
+    {
+      rel: 'stylesheet',
+      href: mainStyles,
+    },
+  ];
+};
 
 const Root = () => {
   const { locale } = useLoaderData<LoaderData>();
