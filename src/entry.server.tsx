@@ -5,12 +5,12 @@ import { RemixServer } from '@remix-run/react';
 import { createInstance } from 'i18next';
 import { PassThrough } from 'stream';
 import { resolve } from 'path';
+import isbot from 'isbot';
 
 import type { EntryContext } from '@remix-run/server-runtime';
 
 import i18n from './config/locales/i18n';
 import i18next from './config/locales/i18next.server';
-import isbot from 'isbot';
 
 const ABORT_DELAY = 5_000;
 
@@ -46,7 +46,6 @@ const handleRequest = async (
         [isbot(headers.get('User-Agent')) ? 'onAllReady' : 'onShellReady']:
           () => {
             const body: any = new PassThrough({ encoding: 'utf-8' });
-
             headers.set('Content-Type', 'text/html');
 
             resolve(

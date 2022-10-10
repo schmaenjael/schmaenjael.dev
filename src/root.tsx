@@ -1,5 +1,7 @@
-import { useTranslation } from 'react-i18next';
 import { json } from '@remix-run/node';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useChangeLanguage } from 'remix-i18next';
 import {
   Links,
   LiveReload,
@@ -9,10 +11,12 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react';
+
 import type { MetaFunction, LoaderFunction } from '@remix-run/node';
 
 import i18next from './config/locales/i18next.server';
-import { useChangeLanguage } from 'remix-i18next';
+import { dark, light } from './styles/themes';
+import { Themes } from './models/settings';
 
 export type LoaderData = { locale: string };
 
@@ -25,13 +29,26 @@ export const meta: MetaFunction = () => ({
 export const loader: LoaderFunction = async ({ request }) =>
   json<LoaderData>({ locale: await i18next.getLocale(request) });
 
-export const handle = {
-  i18n: 'common',
-};
-
 const Root = () => {
   const { locale } = useLoaderData<LoaderData>();
   const { i18n } = useTranslation();
+
+  const [theme, setTheme] = useState<Themes>(Themes.Light);
+
+  const startupThemes = {
+    dark: Object.entries(dark).map(([key, entry]) => [`--${key}`, entry]),
+    light: Object.entries(light).map(([key, entry]) => [`--${key}`, entry]),
+  };
+
+  const updateTheme = () => {
+    startupThemes[theme]?.forEach(([variable, value]) =>
+      document.body.style.setProperty(variable, value)
+    );
+  };
+
+  useEffect(() => {
+    updateTheme();
+  }, [theme]);
 
   useChangeLanguage(locale);
 
@@ -42,7 +59,12 @@ const Root = () => {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <Outlet
+          context={{
+            theme,
+            setTheme,
+          }}
+        />
         <ScrollRestoration />
         <LiveReload />
         <Scripts />
