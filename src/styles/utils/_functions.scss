@@ -1,0 +1,4 @@
+@function theme($color: 'primary') {
+  $varColor: var(--#{$color});
+  @return $varColor;
+}

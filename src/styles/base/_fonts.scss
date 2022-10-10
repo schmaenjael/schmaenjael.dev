@@ -1,0 +1,73 @@
+/************************ Open Sans *******************************************/
+
+/*
+* Font by google fonts
+* https://fonts.google.com/specimen/Open+Sans
+*/
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 300;
+  src: local('Open Sans'), url('/fonts/OpenSans/OpenSans-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 400;
+  src: local('Open Sans'), url('/fonts/OpenSans/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 500;
+  src: local('Open Sans'), url('/fonts/OpenSans/OpenSans-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 600;
+  src: local('Open Sans'), url('/fonts/OpenSans/OpenSans-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: bold;
+  src: local('Open Sans'), url('/fonts/OpenSans/OpenSans-Bold.ttf');
+}
+
+/************************ Fira Code *******************************************/
+
+/*
+* Font by google fonts
+* https://fonts.google.com/specimen/Fira+Code
+*/
+
+@font-face {
+  font-family: 'Fira Code';
+  font-weight: 300;
+  src: local('Fira Code'), url('/fonts/FiraCode/FiraCode-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Fira Code';
+  font-weight: 400;
+  src: local('Fira Code'), url('/fonts/FiraCode/FiraCode-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Fira Code';
+  font-weight: 500;
+  src: local('Fira Code'), url('/fonts/FiraCode/FiraCode-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Fira Code';
+  font-weight: 600;
+  src: local('Fira Code'), url('/fonts/FiraCode/FiraCode-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: 'Fira Code';
+  font-weight: bold;
+  src: local('Fira Code'), url('/fonts/FiraCode/FiraCode-Bold.ttf');
+}
