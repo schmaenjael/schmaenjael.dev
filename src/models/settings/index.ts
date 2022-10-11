@@ -1,7 +1,7 @@
-export interface Settings {
-  [key: string]: unknown;
+export interface SettingsContext {
   theme: Themes;
-  language: Locales;
+  setTheme: (theme: Themes) => void;
+  locale: Locales;
 }
 
 export enum Themes {
