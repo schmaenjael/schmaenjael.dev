@@ -2,9 +2,13 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "dev": "remix dev",
-    "build": "remix build",
+    "dev": "concurrently \"npm:dev:*\"",
+    "build": "concurrently \"npm:build:*\"",
     "script": "concurrently \"npm:script:*\"",
+    "dev:remix": "remix dev",
+    "dev:css": "npm run build:css && node-sass -rw ./src/ -o ./build",
+    "build:remix": "remix build",
+    "build:css": "node-sass ./src/ -o ./build --output-style compressed",
     "script:lint": "prettier --write --loglevel warn . && eslint --fix"
   },
   "pre-commit": [
@@ -16,6 +20,7 @@
     "@remix-run/serve": "^1.7.2",
     "chalk": "^4.1.2",
     "dotenv": "^16.0.2",
+    "eslint-plugin-react-hooks": "^5.0.0-next-aa9988e5e-20221010",
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.8",
     "i18next-fs-backend": "^1.1.5",
@@ -34,7 +39,11 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
+    "concurrently": "^7.4.0",
     "eslint": "^8.23.1",
+    "node-sass": "^7.0.3",
     "prettier": "^2.7.1",
     "typescript": "^4.7.4"
   },
