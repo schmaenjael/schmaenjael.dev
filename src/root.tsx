@@ -1,7 +1,11 @@
-import { json } from '@remix-run/node';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useChangeLanguage } from 'remix-i18next';
+import {
+  json,
+  MetaFunction,
+  LoaderFunction,
+  LinksFunction,
+} from '@remix-run/node';
 import {
   Links,
   LiveReload,
@@ -12,15 +16,13 @@ import {
   useLoaderData,
 } from '@remix-run/react';
 
-import type { MetaFunction, LoaderFunction } from '@remix-run/node';
-
-import i18next from './config/locales/i18next.server';
-import { dark, light } from './styles/themes';
-import { Themes } from './models/settings';
+import i18next from 'src/services/locales/i18next.server';
+import { Locales, Themes } from './models/settings';
+import { SettingsContext } from 'src/context/settings/';
+import { supportedLngs } from 'src/config/locales/i18n';
+import { updateTheme } from 'src/services/themes';
 
 import mainStyles from 'build/styles/main.global.css';
-
-export type LoaderData = { locale: string };
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -28,10 +30,16 @@ export const meta: MetaFunction = () => ({
   viewport: 'width=device-width,initial-scale=1',
 });
 
-export const loader: LoaderFunction = async ({ request }) =>
-  json<LoaderData>({ locale: await i18next.getLocale(request) });
+export const loader: LoaderFunction = async ({ request }) => {
+  const lang = await i18next.getLocale(request);
+  const locale = supportedLngs.includes(lang as Locales)
+    ? (lang as Locales)
+    : Locales.EN;
 
-export const links = () => {
+  return json({ locale });
+};
+
+export const links: LinksFunction = () => {
   return [
     {
       rel: 'stylesheet',
@@ -41,27 +49,11 @@ export const links = () => {
 };
 
 const Root = () => {
-  const { locale } = useLoaderData<LoaderData>();
+  const [theme, setTheme] = useState<Themes>(Themes.Light);
+  const { locale } = useLoaderData<{ locale: Locales }>();
   const { i18n } = useTranslation();
 
-  const [theme, setTheme] = useState<Themes>(Themes.Light);
-
-  const startupThemes = {
-    dark: Object.entries(dark).map(([key, entry]) => [`--${key}`, entry]),
-    light: Object.entries(light).map(([key, entry]) => [`--${key}`, entry]),
-  };
-
-  const updateTheme = () => {
-    startupThemes[theme]?.forEach(([variable, value]) =>
-      document.body.style.setProperty(variable, value)
-    );
-  };
-
-  useEffect(() => {
-    updateTheme();
-  }, [theme]);
-
-  useChangeLanguage(locale);
+  useEffect(() => updateTheme(theme), [theme]);
 
   return (
     <html lang={locale} dir={i18n.dir()}>
@@ -70,12 +62,15 @@ const Root = () => {
         <Links />
       </head>
       <body>
-        <Outlet
-          context={{
+        <SettingsContext.Provider
+          value={{
+            locale,
             theme,
             setTheme,
           }}
-        />
+        >
+          <Outlet />
+        </SettingsContext.Provider>
         <ScrollRestoration />
         <LiveReload />
         <Scripts />

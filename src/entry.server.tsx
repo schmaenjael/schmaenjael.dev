@@ -1,16 +1,15 @@
-import Backend from 'i18next-fs-backend';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { renderToPipeableStream } from 'react-dom/server';
+import { EntryContext } from '@remix-run/server-runtime';
 import { RemixServer } from '@remix-run/react';
+import Backend from 'i18next-fs-backend';
 import { createInstance } from 'i18next';
 import { PassThrough } from 'stream';
 import { resolve } from 'path';
 import isbot from 'isbot';
 
-import type { EntryContext } from '@remix-run/server-runtime';
-
-import i18n from './config/locales/i18n';
-import i18next from './config/locales/i18next.server';
+import i18next from './services/locales/i18next.server';
+import { i18nConfig } from './config/locales/i18n';
 
 const ABORT_DELAY = 5_000;
 
@@ -28,7 +27,7 @@ const handleRequest = async (
     .use(initReactI18next)
     .use(Backend)
     .init({
-      ...i18n,
+      ...i18nConfig,
       lng,
       ns,
       backend: {
@@ -55,10 +54,10 @@ const handleRequest = async (
               })
             );
 
-            pipe<any>(body);
+            pipe(body);
           },
         onShellError: (error: unknown) => reject(error),
-        onError: (error: unknown) => console.error(error),
+        onError: (error: unknown) => process.stderr.write(String(error)),
       }
     );
 

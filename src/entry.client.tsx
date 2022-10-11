@@ -6,14 +6,14 @@ import { RemixBrowser } from '@remix-run/react';
 import { getInitialNamespaces } from 'remix-i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 
-import i18n from './config/locales/i18n';
+import { i18nConfig } from './config/locales/i18n';
 
 i18next
   .use(initReactI18next)
   .use(LanguageDetector)
   .use(Backend)
   .init({
-    ...i18n,
+    ...i18nConfig,
     ns: getInitialNamespaces(),
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json',
