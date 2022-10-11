@@ -1,13 +1,5 @@
-import { useTranslation } from 'react-i18next';
+import { LoaderFunction, redirect } from '@remix-run/node';
+import i18next from 'src/services/locales/i18next.server';
 
-const Index = () => {
-  const { t } = useTranslation('common');
-
-  return (
-    <div>
-      <h1>{t('welcome')}</h1>
-    </div>
-  );
-};
-
-export default Index;
+export const loader: LoaderFunction = async ({ request }) =>
+  redirect(`${await i18next.getLocale(request)}/`);

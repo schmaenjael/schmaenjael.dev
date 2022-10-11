@@ -3,5 +3,7 @@
   "tabWidth": 2,
   "semi": true,
   "singleQuote": true,
-  "useTabs": false
+  "useTabs": false,
+  "endOfLine": "crlf",
+  "arrowParens": "always"
 }

@@ -1,5 +1,11 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { json } from '@remix-run/node';
+import {
+  json,
+  MetaFunction,
+  LoaderFunction,
+  LinksFunction,
+} from '@remix-run/node';
 import {
   Links,
   LiveReload,
@@ -9,12 +15,14 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react';
-import type { MetaFunction, LoaderFunction } from '@remix-run/node';
 
-import i18next from './config/locales/i18next.server';
-import { useChangeLanguage } from 'remix-i18next';
+import i18next from 'src/services/locales/i18next.server';
+import { Locales, Themes } from './models/settings';
+import { SettingsContext } from 'src/context/settings/';
+import { supportedLngs } from 'src/config/locales/i18n';
+import { updateTheme } from 'src/services/themes';
 
-export type LoaderData = { locale: string };
+import mainStyles from 'build/styles/main.global.css';
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -22,18 +30,30 @@ export const meta: MetaFunction = () => ({
   viewport: 'width=device-width,initial-scale=1',
 });
 
-export const loader: LoaderFunction = async ({ request }) =>
-  json<LoaderData>({ locale: await i18next.getLocale(request) });
+export const loader: LoaderFunction = async ({ request }) => {
+  const lang = await i18next.getLocale(request);
+  const locale = supportedLngs.includes(lang as Locales)
+    ? (lang as Locales)
+    : Locales.EN;
 
-export const handle = {
-  i18n: 'common',
+  return json({ locale });
+};
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: 'stylesheet',
+      href: mainStyles,
+    },
+  ];
 };
 
 const Root = () => {
-  const { locale } = useLoaderData<LoaderData>();
+  const [theme, setTheme] = useState<Themes>(Themes.Light);
+  const { locale } = useLoaderData<{ locale: Locales }>();
   const { i18n } = useTranslation();
 
-  useChangeLanguage(locale);
+  useEffect(() => updateTheme(theme), [theme]);
 
   return (
     <html lang={locale} dir={i18n.dir()}>
@@ -42,7 +62,15 @@ const Root = () => {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <SettingsContext.Provider
+          value={{
+            locale,
+            theme,
+            setTheme,
+          }}
+        >
+          <Outlet />
+        </SettingsContext.Provider>
         <ScrollRestoration />
         <LiveReload />
         <Scripts />

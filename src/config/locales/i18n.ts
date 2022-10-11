@@ -1,10 +1,12 @@
-import type { InitOptions } from 'i18next';
+import { InitOptions } from 'i18next';
+import { Locales } from 'src/models/settings';
 
-const i18nConfig: InitOptions = {
-  supportedLngs: ['en', 'de'],
-  fallbackLng: 'en',
+export const supportedLngs: Locales[] = [Locales.EN, Locales.DE];
+export const fallbackLng: Locales = Locales.EN;
+
+export const i18nConfig: InitOptions = {
+  supportedLngs,
+  fallbackLng,
   defaultNS: 'common',
   react: { useSuspense: false },
 };
-
-export default i18nConfig;
