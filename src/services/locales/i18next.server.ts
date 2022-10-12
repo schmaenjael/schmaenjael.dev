@@ -4,7 +4,7 @@ import { resolve } from 'path';
 
 import { i18nConfig } from 'src/config/locales/i18n';
 
-const i18next = new RemixI18Next({
+export const i18next = new RemixI18Next({
   detection: {
     supportedLanguages: i18nConfig.supportedLngs as string[],
     fallbackLanguage: i18nConfig.fallbackLng as string,
@@ -17,5 +17,3 @@ const i18next = new RemixI18Next({
   },
   backend: Backend,
 });
-
-export default i18next;
