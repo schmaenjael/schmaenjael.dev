@@ -8,7 +8,7 @@ import { PassThrough } from 'stream';
 import { resolve } from 'path';
 import isbot from 'isbot';
 
-import i18next from './services/locales/i18next.server';
+import { i18next } from './services';
 import { i18nConfig } from './config/locales/i18n';
 
 const ABORT_DELAY = 5_000;
