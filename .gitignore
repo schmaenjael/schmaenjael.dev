@@ -5,3 +5,7 @@ node_modules
 /public/build
 .env
 .vscode
+
+*.css
+*.css.map
+*.js.map
