@@ -7,7 +7,7 @@ export const links: LinksFunction = () => {
 
 const CatchAll = () => {
   return (
-    <div>
+    <div className="catch-all">
       <SocialMedia />
     </div>
   );

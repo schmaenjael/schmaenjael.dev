@@ -22,6 +22,7 @@ import { supportedLngs } from 'src/config/locales/i18n';
 import { themes, i18next } from 'src/services';
 
 import mainStyles from 'src/styles/main.global.css';
+import { getUUID } from './services/uuid';
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -34,8 +35,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   const locale = supportedLngs.includes(lang as Locales)
     ? (lang as Locales)
     : Locales.EN;
+  const nonce = `nonce-${getUUID()}`;
 
-  return json({ locale });
+  return json({ locale, nonce });
 };
 
 export const links: LinksFunction = () => {
@@ -49,8 +51,10 @@ export const links: LinksFunction = () => {
 
 const Root = () => {
   const [theme, setTheme] = useState<Themes>(Themes.Dark);
-  const { locale } = useLoaderData<{ locale: Locales }>();
+  const { locale, nonce } = useLoaderData<{ locale: Locales; nonce: string }>();
   const { i18n } = useTranslation();
+
+  const csp = `script-src 'nonce-${nonce}' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'; base-uri 'self'; object-src 'none';`;
 
   useEffect(() => themes.updateTheme(theme), [theme]);
 
@@ -58,6 +62,7 @@ const Root = () => {
     <html lang={locale} dir={i18n.dir()}>
       <head>
         <Meta />
+        <meta httpEquiv="Content-Security-Policy" content={csp} />
         <Links />
       </head>
       <body>
@@ -70,9 +75,9 @@ const Root = () => {
         >
           <Outlet />
         </SettingsContext.Provider>
-        <ScrollRestoration />
-        <LiveReload />
-        <Scripts />
+        <ScrollRestoration nonce={nonce} />
+        <LiveReload nonce={nonce} />
+        <Scripts nonce={nonce} />
       </body>
     </html>
   );
