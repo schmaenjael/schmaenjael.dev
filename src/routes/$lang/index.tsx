@@ -17,11 +17,7 @@ const Lang = () => {
 
   useChangeLanguage(locale);
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <div>I am index!</div>;
 };
 
 export default Lang;
