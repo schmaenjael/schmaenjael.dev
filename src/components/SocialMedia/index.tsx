@@ -70,7 +70,7 @@ const SocialMedia = () => {
               href={link}
               target={'_blank'}
             >
-              <img className="social-media__image" src={icon} />
+              <img className="social-media__block-image" src={icon} />
             </a>
           );
       })}
