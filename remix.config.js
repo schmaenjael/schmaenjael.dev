@@ -8,6 +8,6 @@ module.exports = {
   publicPath: '/build/',
   routes: async (defineRoutes) =>
     defineRoutes((route) => {
-      route('/*', 'routes/CatchAll/index.tsx');
+      route('/:lang/', 'routes/$lang/welcome/index.tsx');
     }),
 };
