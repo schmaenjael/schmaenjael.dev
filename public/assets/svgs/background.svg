@@ -1,0 +1,33 @@
+<svg width="784" height="1078" viewBox="0 0 784 1078" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_435_260" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="862" height="1078">
+        <ellipse cx="430.963" cy="539.045" rx="538.955" ry="430.654" transform="rotate(-90 430.963 539.045)" fill="url(#paint0_radial_435_260)" />
+    </mask>
+    <g mask="url(#mask0_435_260)">
+        <path d="M752.683 -25.1733V1102.55" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M668.325 -25.1733V1102.55" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M583.96 -25.1733V1102.55" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M499.595 -25.1733V1102.55" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M415.237 -25.1733V1102.55" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M330.872 -25.1733V1102.55" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M246.513 -25.1733V1102.55" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M162.149 -25.1733V1102.55" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M77.7897 -25.1733V1102.55" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M-175.298 68.8045H837.048" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M-175.298 162.779H837.048" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M-175.298 256.758H837.048" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M-175.298 350.731H837.048" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M-175.298 444.71H837.048" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M-175.298 538.683H837.048" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M-175.298 632.662H837.048" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M-175.298 726.637H837.048" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M-175.298 820.615H837.048" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M-175.298 914.594H837.048" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M-175.298 1008.57H837.048" stroke="white" stroke-opacity="0.15" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <defs>
+        <radialGradient id="paint0_radial_435_260" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(430.963 539.045) rotate(90) scale(430.654 538.955)">
+            <stop stop-color="#C4C4C4" />
+            <stop offset="1" stop-color="#C4C4C4" stop-opacity="0" />
+        </radialGradient>
+    </defs>
+</svg>
