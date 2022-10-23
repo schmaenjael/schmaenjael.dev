@@ -17,11 +17,7 @@ const Lang = () => {
 
   useChangeLanguage(locale);
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 };
 
 export default Lang;
