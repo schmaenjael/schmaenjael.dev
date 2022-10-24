@@ -18,7 +18,7 @@ import {
 
 import { Locales, Themes } from './models/settings';
 import { SettingsContext } from 'src/context/settings/';
-import { supportedLngs } from 'src/config/locales/i18n';
+import { fallbackLng, supportedLngs } from 'src/config/locales/i18n';
 import { themes, i18next } from 'src/services';
 
 import mainStyles from 'src/styles/main.global.css';
@@ -34,7 +34,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const lang = await i18next.getLocale(request);
   const locale = supportedLngs.includes(lang as Locales)
     ? (lang as Locales)
-    : Locales.EN;
+    : fallbackLng;
   const nonce = `nonce-${getUUID()}`;
 
   return json({ locale, nonce });
