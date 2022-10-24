@@ -2,6 +2,7 @@ import { LinksFunction, LoaderFunction, redirect } from '@remix-run/node';
 import SocialMedia, { socialMediaLinks } from 'src/components/SocialMedia';
 import { fallbackLng, supportedLngs } from 'src/config/locales/i18n';
 import { Locales } from 'src/models/settings';
+import { HttpStatusCode } from '~/models/http/statusCodes';
 
 import welcomeStyles from './welcome.styles.css';
 
@@ -16,11 +17,11 @@ export const links: LinksFunction = () => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const url = new URL(request.url);
-  const locale = url.pathname.split('/')[1] as Locales;
+  const locale = request.url.split('/')[3] as Locales;
+  const statusCode = HttpStatusCode.NotFound;
 
   if (supportedLngs.includes(locale)) return { locale };
-  else return redirect(`/${fallbackLng}/error?code=404`);
+  else return redirect(`/${fallbackLng}/error?code=${statusCode}`);
 };
 
 /*

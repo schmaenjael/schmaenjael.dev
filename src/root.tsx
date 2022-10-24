@@ -31,10 +31,8 @@ export const meta: MetaFunction = () => ({
 });
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const lang = await i18next.getLocale(request);
-  const locale = supportedLngs.includes(lang as Locales)
-    ? (lang as Locales)
-    : fallbackLng;
+  const lang = (await i18next.getLocale(request)) as Locales;
+  const locale = supportedLngs.includes(lang) ? lang : fallbackLng;
   const nonce = `nonce-${getUUID()}`;
 
   return json({ locale, nonce });
