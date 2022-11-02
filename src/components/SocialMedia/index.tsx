@@ -57,9 +57,13 @@ const socialMediaList = [
   },
 ];
 
-const SocialMedia = () => {
+interface SocialMediaProps {
+  className: string;
+}
+
+const SocialMedia = ({ className }: SocialMediaProps) => {
   return (
-    <div className="social-media">
+    <div className={`social-media ${className}`}>
       {socialMediaList?.map(({ active, label, link, icon }, i) => {
         if (active)
           return (
