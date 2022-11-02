@@ -16,19 +16,22 @@ import {
   useLoaderData,
 } from '@remix-run/react';
 
-import { Locales, Themes } from './models/settings';
+import { Locales, Themes } from 'src/models/settings';
 import { SettingsContext } from 'src/context/settings/';
 import { fallbackLng, supportedLngs } from 'src/config/locales/i18n';
-import { themes, i18next } from 'src/services';
+import { themes, i18next, getUUID } from 'src/services';
 
 import mainStyles from 'src/styles/main.global.css';
-import { getUUID } from './services/uuid';
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
   title: 'schmaenjael.dev',
   viewport: 'width=device-width,initial-scale=1',
 });
+
+export const handle = {
+  i18n: 'common',
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
   const lang = (await i18next.getLocale(request)) as Locales;

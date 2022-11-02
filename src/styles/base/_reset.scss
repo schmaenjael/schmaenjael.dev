@@ -46,7 +46,7 @@ body {
   height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* A elements that don't have a class get default styles */
@@ -67,6 +67,19 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+
+  &-track {
+    background: var(--background);
+  }
+
+  &-thumb {
+    background: var(--primaryGradient);
+    border-radius: 30px;
+  }
 }
 
 /* Remove all animations and transitions for people that prefer not to see them */
