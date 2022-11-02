@@ -42,11 +42,11 @@ html:focus-within {
 /* Set core body defaults */
 html,
 body {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* A elements that don't have a class get default styles */
@@ -69,6 +69,19 @@ select {
   font: inherit;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+
+  &-track {
+    background: var(--background);
+  }
+
+  &-thumb {
+    background: var(--primaryGradient);
+    border-radius: 30px;
+  }
+}
+
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
@@ -82,8 +95,4 @@ select {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-* {
-  user-select: none;
 }

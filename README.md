@@ -1,8 +1,9 @@
 # <a href="https://schmaenjael.dev/" target="_blank" style="color: lightblue">schmaenjael.dev</a>
 
 [![GitHub version](https://img.shields.io/badge/version-v0.0.1-blue.svg)](https://github.com/schmaenjael/schmaenjael.dev.git)
-[![Acitivity](https://img.shields.io/github/commit-activity/y/schmaenjael/schmaenjael.dev)](https://github.com/schmaenjael/schmaenjael.dev.git)
+[![Activity](https://img.shields.io/github/commit-activity/y/schmaenjael/schmaenjael.dev)](https://github.com/schmaenjael/schmaenjael.dev.git)
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/schmaenjael/schmaenjael.dev.git)
+[![Styled with Prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier")
 
 This is the repository to my personal homepage - built with Remix and React.
 
@@ -88,7 +89,7 @@ If you have questions or a bug you want to report, please click [here](https://g
 ## ⚠️ License
 
 This repository is available under the
-[MIT license](https://opensource.org/licenses/MIT). 
+[MIT license](https://opensource.org/licenses/MIT).
 There are also some external libraries that are available under a variety of licenses.
 
 See [LICENSE](https://github.com/schmaenjael/schmaenjael.dev/blob/master/LICENSE) for the full

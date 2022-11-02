@@ -2,13 +2,14 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
+    "start": "remix-serve build",
     "dev": "concurrently \"npm:dev:*\"",
     "build": "concurrently \"npm:build:*\"",
     "script": "concurrently \"npm:script:*\"",
     "dev:remix": "remix dev",
-    "dev:css": "npm run build:css && node-sass -rw ./src/ -o ./build",
+    "dev:css": "npm run build:css && node-sass -rw ./src/ -o ./src/",
     "build:remix": "remix build",
-    "build:css": "node-sass ./src/ -o ./build --output-style compressed",
+    "build:css": "node-sass ./src/ -o ./src --output-style compressed",
     "script:lint": "prettier --write --loglevel warn . && eslint --fix"
   },
   "pre-commit": [

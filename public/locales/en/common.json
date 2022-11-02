@@ -1,3 +1,5 @@
 {
-  "welcome": "Welcome to Remix"
+  "error__attention_grabber": "Oh no!",
+  "error__status_404": "Looks like this page does not *yet* exist!",
+  "general__legal": "Copyright © 2022 Manuel Mayer. All rights reserved."
 }

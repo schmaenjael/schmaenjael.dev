@@ -1,0 +1,23 @@
+@import 'src/styles/utils/_utils.scss';
+
+.breadcrumbs {
+  display: flex;
+  flex-direction: row;
+  color: theme('textColor');
+  font-family: 'Fira Code';
+  width: 350px;
+
+  &__route {
+    cursor: pointer;
+  }
+
+  &__seperator,
+  &__route {
+    color: theme('textColor');
+  }
+
+  &__seperator,
+  &__opening {
+    margin: 0 1.1ch;
+  }
+}

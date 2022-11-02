@@ -16,13 +16,12 @@ import {
   useLoaderData,
 } from '@remix-run/react';
 
-import i18next from 'src/services/locales/i18next.server';
-import { Locales, Themes } from './models/settings';
+import { Locales, Themes } from 'src/models/settings';
 import { SettingsContext } from 'src/context/settings/';
-import { supportedLngs } from 'src/config/locales/i18n';
-import { updateTheme } from 'src/services/themes';
+import { fallbackLng, supportedLngs } from 'src/config/locales/i18n';
+import { themes, i18next, getUUID } from 'src/services';
 
-import mainStyles from 'build/styles/main.global.css';
+import mainStyles from 'src/styles/main.global.css';
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -30,13 +29,16 @@ export const meta: MetaFunction = () => ({
   viewport: 'width=device-width,initial-scale=1',
 });
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const lang = await i18next.getLocale(request);
-  const locale = supportedLngs.includes(lang as Locales)
-    ? (lang as Locales)
-    : Locales.EN;
+export const handle = {
+  i18n: 'common',
+};
 
-  return json({ locale });
+export const loader: LoaderFunction = async ({ request }) => {
+  const lang = (await i18next.getLocale(request)) as Locales;
+  const locale = supportedLngs.includes(lang) ? lang : fallbackLng;
+  const nonce = `nonce-${getUUID()}`;
+
+  return json({ locale, nonce });
 };
 
 export const links: LinksFunction = () => {
@@ -49,16 +51,19 @@ export const links: LinksFunction = () => {
 };
 
 const Root = () => {
-  const [theme, setTheme] = useState<Themes>(Themes.Light);
-  const { locale } = useLoaderData<{ locale: Locales }>();
+  const [theme, setTheme] = useState<Themes>(Themes.Dark);
+  const { locale, nonce } = useLoaderData<{ locale: Locales; nonce: string }>();
   const { i18n } = useTranslation();
 
-  useEffect(() => updateTheme(theme), [theme]);
+  const csp = `script-src 'nonce-${nonce}' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'; base-uri 'self'; object-src 'none';`;
+
+  useEffect(() => themes.updateTheme(theme), [theme]);
 
   return (
     <html lang={locale} dir={i18n.dir()}>
       <head>
         <Meta />
+        <meta httpEquiv="Content-Security-Policy" content={csp} />
         <Links />
       </head>
       <body>
@@ -71,9 +76,9 @@ const Root = () => {
         >
           <Outlet />
         </SettingsContext.Provider>
-        <ScrollRestoration />
-        <LiveReload />
-        <Scripts />
+        <ScrollRestoration nonce={nonce} />
+        <LiveReload nonce={nonce} />
+        <Scripts nonce={nonce} />
       </body>
     </html>
   );
