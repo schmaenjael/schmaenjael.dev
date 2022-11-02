@@ -1,4 +1,5 @@
 import { LinksFunction, LoaderFunction, redirect } from '@remix-run/node';
+import { useTranslation } from 'react-i18next';
 import SocialMedia, { socialMediaLinks } from 'src/components/SocialMedia';
 import { fallbackLng, supportedLngs } from 'src/config/locales/i18n';
 import { Locales } from 'src/models/settings';
@@ -29,10 +30,12 @@ export const loader: LoaderFunction = async ({ request }) => {
  ? instead of http://localhost:3000/$lang/welcome
  */
 const Welcome = () => {
+  const { t } = useTranslation('common');
+
   return (
     <div className="catch-all">
       <main className="catch-all__main">
-        <h1>meow</h1>
+        <h1>{t('meow')}</h1>
       </main>
       <div className="catch-all__social-media">
         <SocialMedia />
