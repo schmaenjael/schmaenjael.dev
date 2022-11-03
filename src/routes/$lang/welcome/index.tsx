@@ -37,9 +37,7 @@ const Welcome = () => {
       <main className="catch-all__main">
         <h1>{t('meow')}</h1>
       </main>
-      <div className="catch-all__social-media">
-        <SocialMedia />
-      </div>
+      <SocialMedia className={'catch-all__social-media'} />
     </div>
   );
 };

@@ -29,7 +29,7 @@ export const loader: LoaderFunction = ({
   url: string;
 } => {
   const queryParameters = new URLSearchParams(request.url.split('?')[1]);
-  const statusCode = Number(queryParameters.get('code'));
+  const statusCode = Number(queryParameters.get('code')) || 404;
 
   return { statusCode, url: request.url };
 };
@@ -47,12 +47,12 @@ const CatchAll = () => {
         <Breadcrumbs className="catch-all__main-bread-crumbs" url={url} />
         <section className="catch-all__jumbotron">
           <h2>{t('error__attention_grabber')}</h2>
-          <h3>{t(`error__status_${statusCode || 404}`)}</h3>
+          <h3>{t(`error__status_${statusCode}`)}</h3>
           <h1>{statusCode}</h1>
         </section>
         <SocialMedia className="catch-all__main-social-media" />
       </main>
-      <footer className={`catch-all__footer`}>
+      <footer className="catch-all__footer">
         <section className="catch-all__footer-legal">
           {t('general__legal')}
         </section>

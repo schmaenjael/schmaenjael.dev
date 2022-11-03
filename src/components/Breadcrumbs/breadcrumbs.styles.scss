@@ -9,6 +9,11 @@
 
   &__route {
     cursor: pointer;
+
+    &:hover {
+      border-top: 1.25px solid theme('textColor');
+      border-bottom: 1.25px solid theme('textColor');
+    }
   }
 
   &__seperator,
