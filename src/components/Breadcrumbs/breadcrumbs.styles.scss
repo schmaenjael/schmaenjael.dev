@@ -9,6 +9,8 @@
 
   &__route {
     cursor: pointer;
+    transition: border 0.5s ease-in-out;
+    border: 0px solid transparent;
 
     &:hover {
       border-top: 1.25px solid theme('textColor');

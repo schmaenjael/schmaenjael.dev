@@ -35,7 +35,10 @@ export const handle = {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const lang = (await i18next.getLocale(request)) as Locales;
-  const locale = supportedLngs.includes(lang) ? lang : fallbackLng;
+  const requestLocale = request.url.split(/\/|\?/g).splice(3)[0] as Locales;
+  const locale = supportedLngs.includes(requestLocale)
+    ? requestLocale
+    : lang || fallbackLng;
   const nonce = `nonce-${getUUID()}`;
 
   return json({ locale, nonce });
@@ -55,15 +58,16 @@ const Root = () => {
   const { locale, nonce } = useLoaderData<{ locale: Locales; nonce: string }>();
   const { i18n } = useTranslation();
 
-  const csp = `script-src 'nonce-${nonce}' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'; base-uri 'self'; object-src 'none';`;
-
   useEffect(() => themes.updateTheme(theme), [theme]);
 
   return (
-    <html lang={locale} dir={i18n.dir()}>
+    <html lang={locale} dir={i18n.dir(locale)}>
       <head>
         <Meta />
-        <meta httpEquiv="Content-Security-Policy" content={csp} />
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content={`script-src 'nonce-${nonce}' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'; base-uri 'self'; object-src 'none';`}
+        />
         <Links />
       </head>
       <body>

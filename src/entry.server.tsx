@@ -9,7 +9,8 @@ import { resolve } from 'path';
 import isbot from 'isbot';
 
 import { i18next } from './services';
-import { i18nConfig } from './config/locales/i18n';
+import { fallbackLng, i18nConfig, supportedLngs } from './config/locales/i18n';
+import { Locales } from './models/settings';
 
 const ABORT_DELAY = 5_000;
 
@@ -19,7 +20,11 @@ const handleRequest = async (
   headers: Headers,
   context: EntryContext
 ) => {
-  const lng = await i18next.getLocale(request);
+  const lang = await i18next.getLocale(request);
+  const requestLocale = request.url.split(/\/|\?/g).splice(3)[0] as Locales;
+  const locale = supportedLngs.includes(requestLocale)
+    ? requestLocale
+    : lang || fallbackLng;
   const ns = i18next.getRouteNamespaces(context);
   const instance = createInstance();
 
@@ -28,8 +33,8 @@ const handleRequest = async (
     .use(Backend)
     .init({
       ...i18nConfig,
-      lng,
       ns,
+      lng: locale,
       backend: {
         loadPath: resolve(`./public/locales/{{lng}}/{{ns}}.json`),
         allowMultiLoading: true,
